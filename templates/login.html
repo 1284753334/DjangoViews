@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<!--  -->
+<form action="{% url 'app:do_login' %} " method="post">
+<span>用户名</span><input type="text" placeholder="请输入用户名" name="uname">
+<hr>
+<span>密码</span><input type="password" placeholder="请输入密码" name="uword">
+<hr>
+<button>登录</button>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,398 @@
+# Django
+
+## SQLite
+-轻量级嵌入式数据库
+ 特点是小
+ -常用场景
+ Android IOS wp
+-该数据库与MySQLX相似度百分之95
+
+
+## 快捷键
+-  万能键
+        Alt+ Enter
+
+# 实现一个请求
+- 注册一个路由
+        urls中
+        -url
+            -参数  匹配规则 zhengze
+        视图函数
+            -对应的是views中的一个函数
+            --没有括号
+  - 去views实现对应的视图函数
+    - 第一个参数是 request
+    - 永远记得返回 Response
+
+
+    ## html
+    ul*5  Tab   自动补全 5 个标签
+    ul>li*5     自动补全 ul  包含 5 个 li标签
+    ##
+
+    ## 模板配置
+    一  在应用中配置（了解  不方便 继承 ）
+    在setting 中 注册 该 app
+    在应用下创建templates 模板,并标记为模板文件夹
+
+    二   在工程（项目）下创建 templates，并标记为模板文件夹（推荐使用 方便使用）
+
+    在setting 中  声明  模板  路径
+
+    在主urls 中声明  url（‘^Two/$’,include(Two.urls)）
+
+
+
+    ##路由优化配置
+
+        - 项目如果逻辑过于复杂，可以进行拆分
+        -拆分为多个App
+        --继续拆分路由 urls
+            -在app 中创建自己的路由
+                -urlpattrerns 路由规则列表
+                -在根路由中进行子路由的包含
+               -子路由使用
+                    -根路由 +  子路由的规则进行访问
+
+
+## model 使用了ORM 技术
+-object relational Mapping 对象关系映射
+--将业务逻辑进行了解耦合
+    -object.save()  保存
+    -object.delate() 删除
+——关系型数据库
+    --DDL
+    —— 通过model 定义实现 数据库表的定义
+
+
+Ctrl+p 查看 render()里面参数  鼠标定位到括号里
+
+shift + f6  重命名
+
+
+第三天 记录
+
+快捷键
+control + d  复制一行，粘贴到下面
+alt+ shift + ↑ ↓  移动位置
+
+标签
+    {% %} 标识符
+    标签分为单标签和 双标签
+    成对的标签切记不能省略 开始标签 和 结束标签
+
+
+结构标签
+        block  块  作用： 用来规划我们的布局（挖坑）
+
+        首次出现 代表出现
+        第二次出现 代表 填充 以前的规划
+        第三次出现 ， 代表填充以前的规划， 默认动作 会覆盖 ，
+        若调用 {{block.super }} 可以 实现 增量式操作（继承）
+
+        extends  继承  可以获取 父 模块中的 所有结构
+
+        blocker + extends
+         化整为零
+
+         include  包含
+
+                    可以将页面作为一部分 嵌入到其他页面中
+
+                    由零聚一
+                    三个标签可以一起用
+                    首推 extends + block   include   效率低
+
+                如果我们继承一个父模板，子模版自己直接重写页面结构是不生效的
+
+                只能在 block 中 才能生效
+
+
+        静态资源
+
+            动静分离
+            创建静态文件夹
+            在setting 中 注册 STSTICFILES = []
+            在模板中 使用
+                先加载 静态资源 {%  load static%}
+                使用 {% static "xxx" %}  相对路径
+               坑点
+               仅在DeBug 模式可以使用
+               以后需要自己单独处理
+
+
+        url
+            路由器
+                 按照列表的书写顺序 进行匹配
+                 从上到下匹配，没有最优匹配的概念
+             路由规则书写
+                通常以 ^ 开头，
+                在结尾处  直接添加 反  斜线  （95%  以上都加 ）
+
+
+                路由中的参数 用（） 进行获取
+
+                一个圆括号对应视图函数 中的一个参数
+
+                    参数
+                            路径参数
+                                位置参数
+                                    按照书写顺序 进行匹配
+
+                             关键字参数
+                                按照参数名称匹配，和顺序无关
+                               参数个数必须 和视图 中 函数 参数 个数 一致（除默认的request 外）
+
+                        反向解析
+                            根据路由中的namespace 和在 子路由中注册 app_name  ,这两个参数 来进行
+                            动态查找路径
+
+                            在模板中 使用 {% url "namespace:name"%}
+
+                            如果带有位置参数{% url "namespace:name" value1,value2 %}
+
+                            带有关键字参数 {% url 'namaspace:name'  k=value1 k2=value2%}
+
+
+
+                知识点：
+                        loacal  内置函数  ，局部变量，使用字典的方式打包
+                        key 是变量 名，value 是 变量 中存储的数据
+
+
+
+                错误页面的定制
+                   在template 页面直接书写 指定页面（404）的html
+                    关闭 DeBug   填写   allow_host = []
+
+                    实现原则，就近原则
+
+                    双 R
+
+                        Request
+                                内置属性  method   path
+                                    GET
+                                       类字典结构   一个key  允许对应 多个
+                                        get
+                                        getlist
+                                    POST
+                                    META
+                                            各种客户端信息
+                                            REMOTE_ADDR   远端访问 ip
+
+                        Response
+
+
+day04
+        response
+
+
+    MIME 作用： 制定传输数据 用哪中形式打开
+
+            格式： 大类型/小类型
+            image/jpg
+
+
+        json
+
+            jsonObject
+              类型：  {}   key- value
+
+              JsonArray
+              类型： []
+              列表中 可以是 普通数据类型，也可以是 JsonObject
+          jsonObject和  JsonArray 可以嵌套使用
+
+          给移动端 使用 json
+          给Ajax 使用 json
+              前后端
+            DRF
+
+            Gooogle Chrome  json 格式化插件
+                json Fomatter
+                jsonview
+
+        JsonResponse
+            以json 格式返回数据
+            重写了__init__ ,序列化json 数据，指定 content_type
+            为application/json
+
+            HttpResponsePermanentRedirect
+                重定向 ，永久性
+                301
+            HttpResponseBadRequest
+                400
+
+
+        会话技术
+
+     出现场景
+        服务器如何识别客户端
+        Http在web开发中基本都是短链接
+      请求声明周期
+        从Request开始
+        到Response 结束
+
+     种类
+        Cookie
+                客户端会话技术
+                    数据存储在客户端
+                键值对存储
+                支持过期时间
+                默认Cookie 会自动携带，本网站所有Cookie
+                Cookie 跨域名，跨网站
+                通过HttpResponse
+                cookie 默认不支持中文（实现cookie支持中文   bs64）
+                    可以加盐
+                            加密
+                            获取的时候解密
+
+
+
+        Session
+            服务端会话技术
+            数据存储在服务器
+            默认Session 存储在 内存 中
+            Django  默认会把 session 持久化到 数据库中
+            session 的默认过期时间是 14天
+                主键是字符串
+                数据是使用了数据安全的 = （一般是使用了 bs64） /u  编码方式 unicode
+                   使用的是base64
+                   在前部添加了一个混淆串
+
+            session 依赖与cookie 清除cookie, session 失效
+
+        Token
+            服务端会话技术
+            自定义的session
+            如果用于网页中 使用起来和 Session 基本一致
+            如果使用在移动端或者客户端开发中，通常以json形式传输，需要移动端自己存储Token
+            Token 关联数据的时候，主动传输Token
+
+        Cookie 和 Session  ,Token 对比
+        Cookie 使用更简洁，服务器压力更小，数据不是很安全
+        Session 服务器要维护Session ,相对安全
+        Token 拥有Session 的所优点，自己维护略微麻烦，支持更多的终端
+
+
+
+
+
+
+
+   编码
+            ASCII
+            Unicode
+
+
+
+
+
+
+
+
+
+
+
+
+    优秀程序
+        松耦合
+                解耦合
+        高内聚
+
+
+
+
+
+
+
+    登录
+        首先有一个页面
+            页面中 有 输入框
+            有登陆按钮
+        点完登录 ，默认进入个人中心
+        个人中心显示用户名
+
+
+session 登录
+
+
+        CSRF
+
+                防跨站攻击
+                防止恶意注册，确保客户端是我们的客户端
+                使用了 Cookie 中的csretoken 进行验证，传输
+                服务器发送给客户端，客户端将cookie 获取过来，还要进行编码转换（数据安全），
+
+                如何实现
+                        在我们 存在csrf_token 标签的页面中，响应还会自动设置一个cookie,csrftoken
+                        当我们提交的时候，会自动验证csrftoken
+                        验证通过，正常执行以后流程，验证不通过，直接403
+
+
+                        高级
+                         第三方插件
+                         底层的实现原理
+                         AOP 面向切面编程
+                            反扒
+                            安全
+                          文件上传
+                          前后端分离
+                            RESTful
+                         日志
+                         后台管理
+                         用户角色 后台管理
+                         部署
+                         支付宝支付
+                         微信支付
+
+                     算法；
+                        Base64
+                        urlencode
+                    摘要算法 指纹算法 杂凑算法
+                        MD5 SHA
+                            MD5: 默认128的二进制
+                            32位的十六进制
+                            32位的Unicode
+
+                     特点：1.   单向不可逆的
+                            2.不管输出多长，输出的都是固定长度
+                      3 .只要输出有任意变量，输出都会发生巨大变化
+          加密算法
+            对称加密
+                    一把钥匙
+                    对称加密
+                    例如：DES  AES
+                    加密解密 效率高
+                    钥匙一旦丢失 数据全部丢失
+
+            非对称加密
+                    两把钥匙 成对的
+                    公钥（1024位） 和 私钥（常见的2048位）
+                    例如： RSA  PGP
+                    安全性最高
+                    算法复杂 破解 需要时间长
+                    例如 支付宝 微信
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

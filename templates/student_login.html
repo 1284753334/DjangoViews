@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>student_login</title>
+</head>
+<body>
+<form action="{% url 'two:stslogin' %}" method="post">
+    {% csrf_token %}
+    <span>用户名</span><input type="text" name="username" placeholder="请输入用户名">
+    <br>
+    <span>密码</span><input type="password" name = 'password' placeholder="请输入密码">
+    <br>
+    <button>登录</button>
+
+</form>
+</body>
+</html>
